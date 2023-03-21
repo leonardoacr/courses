@@ -10,10 +10,39 @@ export const Header = () => {
   const navigate = useNavigate();
 
   const logout = () => {
-    changeLocalStorage({ login: false });
+    changeLocalStorage({
+      login: false,
+      user: {
+        id: '',
+        name: '',
+        email: '',
+      },
+    });
     setIsLoggedIn(false);
     navigate('/');
   };
+
+  console.log('page now: ' + location.pathname);
+  let buttonText;
+
+  const buttonOnClick = () => {
+    if (location.pathname === '/account/1') {
+      navigate('/accountinfo');
+      return;
+    }
+
+    if (location.pathname === '/accountinfo') {
+      navigate('/account/1');
+      return;
+    }
+  };
+
+  if (location.pathname === '/account/1') {
+    buttonText = 'Account Info';
+  } else if (location.pathname === '/accountinfo') {
+    buttonText = 'Account';
+  }
+
   return (
     <Flex justifyContent="center" backgroundColor="inherit" textColor="white">
       <Box>
@@ -25,6 +54,15 @@ export const Header = () => {
       {isLoggedIn && (
         <>
           <Spacer />
+          <Button
+            colorScheme="blue"
+            size="sm"
+            marginTop={3}
+            marginRight={3}
+            onClick={() => buttonOnClick()}
+          >
+            {buttonText}
+          </Button>
           <Button
             colorScheme="purple"
             size="sm"

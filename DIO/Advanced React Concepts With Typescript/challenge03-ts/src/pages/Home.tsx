@@ -1,4 +1,4 @@
-import { Box, Center, Input } from '@chakra-ui/react';
+import { Box, Button, Center, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../components/AppContext';
@@ -8,15 +8,18 @@ import { login } from '../services/login';
 import { changeLocalStorage } from '../services/storage';
 
 const Home = () => {
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
   const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const { setIsLoggedIn } = useContext(AppContext);
   const navigate = useNavigate();
 
-  const validateUser = async (email: string) => {
-    const loggedIn = await login(email);
+  const validateUser = async (email: string, password: string) => {
+    const loggedIn = await login(email, password);
 
     if (!loggedIn) {
-      return alert('Invalid e-mail');
+      return alert('Invalid e-mail or password');
     }
 
     setIsLoggedIn(true);
@@ -35,9 +38,21 @@ const Home = () => {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
-        <Input placeholder="password" />
+        <InputGroup size="md">
+          <Input
+            type={show ? 'text' : 'password'}
+            placeholder="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+          <InputRightElement width="4.5rem">
+            <Button h="1.75rem" size="sm" onClick={handleClick}>
+              {show ? 'Hide' : 'Show'}
+            </Button>
+          </InputRightElement>
+        </InputGroup>
         <Center>
-          <DButton onClick={() => validateUser(email)} />
+          <DButton onClick={() => validateUser(email, password)} />
         </Center>
       </Card>
     </Box>

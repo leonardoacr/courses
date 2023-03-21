@@ -15,23 +15,25 @@ export const Header = () => {
     navigate('/');
   };
   return (
-    <Flex
-      justifyContent="center"
-      alignItems="center"
-      backgroundColor="inherit"
-      textColor="white"
-      flexDir="column"
-    >
+    <Flex justifyContent="center" backgroundColor="inherit" textColor="white">
       <Box>
         <Center>
-          <img width="50rem" src={BankIcon} alt="bank-icon" />
-          <Text fontSize="3xl">Dio Bank</Text>
+          <img width="40rem" src={BankIcon} alt="bank-icon" />
+          <Text fontSize="1xl">DIO Bank</Text>
         </Center>
       </Box>
       {isLoggedIn && (
         <>
           <Spacer />
-          <Button onClick={() => logout()}>Exit</Button>
+          <Button
+            colorScheme="purple"
+            size="sm"
+            marginTop={3}
+            marginRight={3}
+            onClick={() => logout()}
+          >
+            Exit
+          </Button>
         </>
       )}
     </Flex>

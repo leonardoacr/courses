@@ -12,7 +12,7 @@ function App() {
     <BrowserRouter>
       <AppContextProvider>
         <ChakraProvider>
-          <div style={{ backgroundColor: '#111f2a', minHeight: '100vh' }}>
+          <div style={{ backgroundColor: '#111f2a', minHeight: '120vh' }}>
             <Layout>
               <MainRoutes />
             </Layout>

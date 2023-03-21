@@ -48,7 +48,9 @@ const Account = () => {
           <>
             <CardInfo
               mainContent={`Welcome ${userData?.name}`}
-              content={`${actualData.getDay()} / ${actualData.getMonth()} / ${actualData.getFullYear()} ${actualData.getHours()}:${actualData.getMinutes()}`}
+              content={`
+              ${actualData.getMonth() + 1} / ${actualData.getDate()} / ${actualData.getFullYear()}
+              ${actualData.getHours()}:${actualData.getMinutes()}`}
             />
             <CardInfo mainContent="Balance" content={`$ ${userData.balance}`} />
           </>

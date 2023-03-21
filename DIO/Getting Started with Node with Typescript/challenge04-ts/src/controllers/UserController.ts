@@ -36,7 +36,7 @@ export class UserController {
 
 
         this.userService.createUser(user.name, user.email)
-        return response.status(201).json({ message: 'Usuário criado' })
+        return response.status(201).json({ message: 'User created' })
     }
 
     getAllUsers = (request: Request, response: Response) => {

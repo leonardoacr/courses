@@ -10,7 +10,7 @@ describe('UserController', () => {
 
     const userController = new UserController(mockUserService as UserService);
 
-    it('Deve adicionar um novo usuário', () => {
+    it('Should add new user', () => {
         const mockRequest = {
             body: {
                 name: 'Nath',
@@ -20,6 +20,45 @@ describe('UserController', () => {
         const mockResponse = makeMockResponse()
         userController.createUser(mockRequest, mockResponse)
         expect(mockResponse.state.status).toBe(201)
-        expect(mockResponse.state.json).toMatchObject({ message: 'Usuário criado' })
+        expect(mockResponse.state.json).toMatchObject({ message: 'User created' })
+    })
+
+    it('Should receive a message for empty name', () => {
+        const mockRequest = {
+            body: {
+                name: undefined,
+                email: 'nath@test.com'
+            }
+        } as Request
+        const mockResponse = makeMockResponse()
+        userController.createUser(mockRequest, mockResponse)
+        expect(mockResponse.state.status).toBe(400)
+        expect(mockResponse.state.json).toMatchObject({ message: 'Bad request! Name field empty' })
+    })
+
+    it('Should receive a message for empty email', () => {
+        const mockRequest = {
+            body: {
+                name: 'Nath',
+                email: undefined
+            }
+        } as Request
+        const mockResponse = makeMockResponse()
+        userController.createUser(mockRequest, mockResponse)
+        expect(mockResponse.state.status).toBe(400)
+        expect(mockResponse.state.json).toMatchObject({ message: 'Bad request! Email field empty' })
+    })
+
+    it('Should receive a message for invalid email', () => {
+        const mockRequest = {
+            body: {
+                name: 'Nath',
+                email: 'nathtest.com'
+            }
+        } as Request
+        const mockResponse = makeMockResponse()
+        userController.createUser(mockRequest, mockResponse)
+        expect(mockResponse.state.status).toBe(400)
+        expect(mockResponse.state.json).toMatchObject({ message: 'Bad request! Invalid email' })
     })
 })

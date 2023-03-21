@@ -20,16 +20,30 @@ export class UserService {
     }
 
     createUser = (name: string, email: string) => {
-        const user = {
+        const user: User = {
             name,
             email
         }
 
         this.db.push(user)
-        console.log('DB atualizado', this.db)
+        console.log('DB updated', this.db)
     }
 
     getAllUsers = () => {
         return this.db
+    }
+
+    deleteUser = (name: string, email: string) => {
+        const user: User = {
+            name,
+            email
+        }
+
+        const nameToRemove = user.name;
+        const emailToRemove = user.email;
+
+        this.db = this.db.filter(user => user.name !== nameToRemove && user.email !== emailToRemove);
+
+        console.log('User deleted', this.db)
     }
 }

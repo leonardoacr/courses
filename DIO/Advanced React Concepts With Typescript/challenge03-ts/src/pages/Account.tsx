@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { api } from '../api';
 import CardInfo from '../components/CardInfo';
 import { AppContext } from '../components/AppContext';
+import { changeLocalStorage } from '../services/storage';
 
 interface UserData {
   email: string;

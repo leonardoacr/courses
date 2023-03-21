@@ -7,21 +7,27 @@ interface IAppContext {
   setIsLoggedIn: (isLoggedIn: boolean) => void;
 }
 
+interface UserData {
+  id: string;
+  name: string;
+  email: string;
+}
+
 export const AppContext = createContext({} as IAppContext);
 
 export const AppContextProvider = ({ children }: any) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [user, setUser] = useState<UserData | any>();
 
   const storage = getAllLocalStorage();
 
   useEffect(() => {
     if (storage) {
-      const { login } = JSON.parse(storage);
+      const { login, user } = JSON.parse(storage);
       setIsLoggedIn(login);
+      setUser(user);
     }
   }, []);
-
-  const user = 'nathally';
 
   return (
     <AppContext.Provider value={{ user, isLoggedIn, setIsLoggedIn }}>

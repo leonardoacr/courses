@@ -1,4 +1,4 @@
-const conta = {
+const account = {
     email: 'nath@dio.bank',
     password: '123456',
     name: 'Nathaly Souza',
@@ -8,6 +8,6 @@ const conta = {
 
 export const api = new Promise((resolve) => {
     setTimeout(() => {
-        resolve(conta)
+        resolve(account)
     }, 3000)
 })

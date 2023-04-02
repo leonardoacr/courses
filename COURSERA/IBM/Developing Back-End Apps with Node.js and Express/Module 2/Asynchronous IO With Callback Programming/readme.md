@@ -20,7 +20,7 @@ the JSON string into a JavaScript object so we can work with it in our code.
 import https from "https";
 import http from "http";
 
-const API_KEY = "uKQaaxK5wAG5ZXGtOy0EMq2VHq0ddxl5iQvoJGaw";
+const API_KEY = "your-api-key";
 const hostname = "api.nasa.gov";
 const path = `/planetary/apod?api_key=${API_KEY}`;
 const options: http.RequestOptions = {

@@ -1,11 +1,11 @@
 import express from 'express';
-import CustomerAuth from '../controllers/CustomerAuth';
+import UserAuth from '../controllers/UserAuth';
 
 const router = express.Router();
 
-const customerAuth = new CustomerAuth();
+const userAuth = new UserAuth();
 
-router.post('/login', customerAuth.login);
-router.post('/register', customerAuth.register);
+router.post('/login', userAuth.login);
+router.post('/register', userAuth.register);
 
 export default router;

@@ -1,9 +1,9 @@
 export interface IReview {
-    [key: number]: {
+    [reviewId: number]: {
         username: string;
         rating: number;
         comment: string;
-    }
+    };
 }
 
 export interface IBook {

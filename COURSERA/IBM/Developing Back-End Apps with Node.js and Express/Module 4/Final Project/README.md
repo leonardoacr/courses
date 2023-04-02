@@ -27,25 +27,25 @@ Please take the particular screenshots for each particular task for your peer re
 
 ## General users:
 
-Task 1: Get the book list available in the shop.- 2 Points
+[x] Task 1: Get the book list available in the shop.- 2 Points
 
-Task 2: Get the books based on ISBN.- 2 Points
+[x] Task 2: Get the books based on ISBN.- 2 Points
 
-Task 3: Get all books by Author. -2 Points
+[x] Task 3: Get all books by Author. -2 Points
 
-Task 4: Get all books based on Title - 2 Points
+[x] Task 4: Get all books based on Title - 2 Points
 
-Task 5: Get book Review. - 2 Points
+[x] Task 5: Get book Review. - 2 Points
 
-Task 6: Register New user – 3 Points
+[x] Task 6: Register New user – 3 Points
 
-Task 7: Login as a Registered user - 3 Points
+[x] Task 7: Login as a Registered user - 3 Points
 
 ## Registered Users:
 
-Task 8: Add/Modify a book review. - 2 Points (Making it)
+[x] Task 8: Add/Modify a book review. - 2 Points (Making it)
 
-Task 9: Delete book review added by that particular user - 2 Points
+[x] Task 9: Delete book review added by that particular user - 2 Points
 
 Node.JS program with 4 methods:
 Use Async/Await or Promises with Axios in Node.js for all the four methods.

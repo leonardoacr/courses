@@ -1,56 +1,109 @@
 import { IReview, IBook } from "../interfaces/IBooks";
 import books from "./../data/books"
 
-export class Book {
-    isbn: string;
-    reviews: { [reviewId: number]: IReview } = {};
-
-    constructor(isbn: string) {
-        this.isbn = isbn;
+export class BookModel {
+    constructor() {
     }
 
-    createReview(username: string, rating: number, comment: string) {
-        const reviewId = Object.keys(this.reviews).length + 1;
+    getAllBooks(): IBook {
+        return books;
+    }
+
+    getBookByISBN(isbn: string): IBook | undefined {
+        const bookArray = Object.values(books);
+        const book = bookArray.find((book) => book.isbn === isbn);
+        console.log(isbn)
+        return book;
+    }
+
+    getBookByAuthor(author: string): IBook | undefined {
+        const bookArray = Object.values(books);
+        const book = bookArray.find((book) => book.author === author);
+        return book;
+    }
+
+    getBookByTitle(title: string): IBook | undefined {
+        const bookArray = Object.values(books);
+        const book = bookArray.find((book) => book.title === title);
+        return book;
+    }
+
+    getBookReview(isbn: string): IBook | undefined {
+        const bookArray = Object.values(books);
+        const book = bookArray.find((book) => book.isbn === isbn);
+        const review = book.reviews;
+        return review;
+    }
+
+    createReview(isbn: string, username: string, rating: number, comment: string) {
+        const book = Object.values(books).find((book) => book.isbn === isbn);
+        if (!book) {
+            throw new Error(`Book with ISBN ${isbn} not found.`);
+        }
+
+        if (this.checkUsernameOnReview(username)) {
+            throw new Error(`This username already have a review on this book.`);
+        }
+
+        const reviewId = Object.keys(book.reviews).length + 1;
         const review = { username, rating, comment };
-        this.reviews[reviewId] = review;
+        book.reviews[reviewId] = review;
+
+        // Update the book in the books object
+        books[book.id] = book;
     }
 
-    updateReview(reviewId: number, username: string, rating: number, comment: string) {
-        const review = this.reviews[reviewId];
+    updateReview(isbn: string, username: string, rating: number, comment: string) {
+        const book = Object.values(books).find((book) => book.isbn === isbn);
+        if (!book) {
+            throw new Error(`Book with ISBN ${isbn} not found.`);
+        }
+
+        const review = Object.values(book.reviews).find((review) =>
+            (review as IReview[keyof IReview]).username === username
+        );
+
         if (review) {
-            review[reviewId].username = username;
-            review[reviewId].rating = rating;
-            review[reviewId].comment = comment;
+            (review as IReview[keyof IReview]).rating = rating;
+            (review as IReview[keyof IReview]).comment = comment;
+
+            // Update the book in the books object
+            books[book.id] = book;
         } else {
-            throw new Error(`Review with ID ${reviewId} does not exist`);
+            throw new Error(`This username does not have a review on this book.`);
         }
     }
 
-    deleteReview(reviewId: number) {
-        if (this.reviews[reviewId]) {
-            delete this.reviews[reviewId];
-        } else {
-            throw new Error(`Review with ID ${reviewId} does not exist`);
+    deleteReview(isbn: string, username: string) {
+        const book = Object.values(books).find((book) => book.isbn === isbn);
+        if (!book) {
+            throw new Error(`Book with ISBN ${isbn} not found.`);
+        }
+
+        if (!this.checkUsernameOnReview(username)) {
+            throw new Error(`This username does not have a review on this book.`);
+        }
+
+        const reviewId = Object.keys(book.reviews).find((id) =>
+            (book.reviews as IReview)[parseInt(id)].username === username
+        );
+
+        delete book.reviews[reviewId!];
+        books[book.id] = book;
+    }
+
+
+    private checkUsernameOnReview(username: string): boolean {
+        try {
+            return Object.values(books).some((book) => {
+                return Object.values(book.reviews as IReview).some((review) =>
+                    review.username === username
+                );
+            });
+        } catch (error) {
+            return false;
         }
     }
+
 }
 
-export const getAllBooks = () => {
-    return Object.values(books);
-};
-
-export const getBookByISBN = (isbn: number): IBook | undefined => {
-    return books[isbn];
-};
-
-export const getBookByAuthor = (author: string): IBook | undefined => {
-    const bookArray = Object.values(books);
-    const book = bookArray.find((book) => book.author === author);
-    return book;
-}
-
-export const getBookByTitle = (title: string): IBook | undefined => {
-    const bookArray = Object.values(books);
-    const book = bookArray.find((book) => book.title === title);
-    return book;
-}
